@@ -1,12 +1,13 @@
 window.onload = function() {
 
-    var dispatcher = new cf.EventDispatcher();
-    dispatcher.addEventListener(cf.FlowEvents.USER_INPUT_UPDATE, function(event) {
-    var userInput = event.detail.tag._values[0]
-    console.log(userInput)
-  },
-  false
-);
+//     var dispatcher = new cf.EventDispatcher();
+//     dispatcher.addEventListener(cf.FlowEvents.USER_INPUT_UPDATE, function(event) {
+//     var userInput = event.detail.tag._values[0]
+//     console.log(userInput)
+//     console.log(event)
+//   },
+//   false
+// );
 
 
     var conversationalForm = new window.cf.ConversationalForm.startTheConversation({
@@ -14,12 +15,12 @@ window.onload = function() {
       context: document.getElementById("cf-context"),
       robotImage: ("assets/img/kwesi2.png"),
       userImage: ("assets/img/user1.png"),
-      eventDispatcher: dispatcher,
+      // eventDispatcher: dispatcher,
       submitCallback: function() {
         // var formData = conversationalForm.getFormData();
-        var formDataSerialized = conversationalForm.getFormData(true);
         // console.log(formData);
-        console.log(formDataSerialized);
+        var formDataSerialized = conversationalForm.getFormData(true);
+        // console.log(formDataSerialized);
 
 
         if (formDataSerialized['cfc-services'] == "bank-settings" ){
@@ -66,6 +67,8 @@ window.onload = function() {
 
   
         conversationalForm.addRobotChatResponse(message);
+        formDataSerialized['cfc-bank-settings'].length = 0;
+        // console.log(formDataSerialized)
         conversationalForm.remapTagsAndStartFrom(1,1,true);
 
       }
